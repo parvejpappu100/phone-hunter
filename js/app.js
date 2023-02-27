@@ -9,6 +9,7 @@ const displayPhones = phones =>{
     phonesContainer.innerHTML = "";
     // * To display 9 items:
     phones = phones.slice(0,9);
+    // * Added no found message:
     const noPhones = document.getElementById("no-found-message");
     const showAllButton = document.getElementById("show-all-phone");
     if (phones.length === 0){
@@ -34,12 +35,27 @@ const displayPhones = phones =>{
         `;
         phonesContainer.appendChild(phoneDive);
     })
+    // * Stop loder or spinner:
+    toggleSpinner(false);
 }
 
 
 const searchPhones = () => {
     const searchText = document.getElementById("search-field").value ;
+    // * Start loder:
+    toggleSpinner(true)
     loadPhones(searchText);
 }   
+
+// * Set Loder or Spinner:
+const toggleSpinner = isLoding =>{
+    const loderSection = document.getElementById("loder");
+    if(isLoding){
+        loderSection.classList.remove("d-none");
+    }
+    else{
+        loderSection.classList.add("d-none");
+    }
+}
 
 loadPhones("phone");
