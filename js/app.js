@@ -34,7 +34,9 @@ const displayPhones = (phones,dataLimit) =>{
             <div class="card-body">
                 <h5 class="card-title">${phone.phone_name}</h5>
                 <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <button onclick="loadPhoneDetails('${phone.slug}')" href="#" class="btn btn-primary">Show Details</button>
+                <button onclick="loadPhoneDetails('${phone.slug}')" href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#phoneDetails">
+                    Show Details
+                </button>
             </div>
         </div>
         `;
@@ -82,8 +84,26 @@ const loadPhoneDetails = (id) =>{
     const url =` https://openapi.programming-hero.com/api/phone/${id}`;
     fetch(url)
     .then(res => res.json())
-    .then(data => console.log(data.data))
+    .then(data => displayPhoneDetails(data.data))
 }
 
+const displayPhoneDetails = (details) => {
+    const phoneTitle = document.getElementById("phoneDetailsTitle");
+    phoneTitle.innerText = details.name;
+
+    const modalBody = document.getElementById("modal-body");
+    modalBody.innerHTML = `
+        <div class="d-flex gap-2 align-items-center">
+            <div><img src="${details.image}"></div>
+            <div>
+                <h6>Brand : ${details.brand}</h6>
+                <h6>Storage : ${details.mainFeatures.storage}</h6>
+                <h6>Display Size : ${details.mainFeatures. displaySize}</h6>
+                <h6>Memory : ${details.mainFeatures.memory}</h6>
+            </div>
+        </div>
+    `;
+    console.log(details.mainFeatures);
+}
 
 loadPhones("phone");
