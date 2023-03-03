@@ -40,6 +40,7 @@ const displayPhones = (phones,dataLimit) =>{
             </div>
         </div>
         `;
+        console.log(phone)
         phonesContainer.appendChild(phoneDive);
     })
     // * Stop loder or spinner:
